@@ -10,6 +10,8 @@ d3.select("section").append("svg");
 
 ///////////  DATA  ///////////
 
+var selectedYear = 2010; // by default, we display data in 2010.
+
 var dataset = []; // data loaded
 var dataMean = [], days = []; // data caculated  {"year":2010,"month":1,"temperatureMean":20}
 for(var i = 0; i <= 4; i++ ){
@@ -60,14 +62,43 @@ var fixing = function(loadedData){
 			//	console.log(year+' '+month +' '+ dataMean[year-2010][month-1]+", "+days[year-2010][month-1]);
 		}
 	}
+	/// dataMean[year][month] = temperatureMean
 };
 
-//load data from csv
+
+var displayData = function(selectedYear){
+	d3.select(".vis").selectAll("p")
+	    .data(dataMean[selectedYear-2010])
+	    .enter()
+	    .append("p")
+	    .text(function(d){return "The data here is "+d;});
+
+    console.log(d3.selectAll("p"))
+}
+
+//load data from csv and.. Start Visulisation 
 d3.csv("meteo.csv", function(d){
 	console.table(d);
 	dataset = d;
 	//d3.select('.demo').text(JSON.stringify(d));
+	
 	fixing(dataset);
-	console.log(dataMean);
+	console.table(dataMean);
+
+	displayData(selectedYear);
+	
+	
+	
 });
+
+
+
+
+
+
+
+
+
+
+
   
