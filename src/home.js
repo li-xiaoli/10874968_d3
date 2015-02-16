@@ -1,7 +1,8 @@
 /*
  *  http://alignedleft.com/tutorials/d3/binding-data
  *  API https://github.com/mbostock/d3/wiki/API-Reference
- */
+ *  http://chimera.labs.oreilly.com/books/1230000000345/index.html
+ */ 
 
 ///////////  DOM  /////////// 
 
