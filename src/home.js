@@ -138,6 +138,7 @@ var displayData = function(selectedYear){
 var changeYear = function(year){
 	console.log(year);
 	selectedYear = Number(year);
+	document.getElementById("currentYear").innerHTML = selectedYear;
 	
 	svg.selectAll("rect")
 			   .data(dataMean[selectedYear-2010])

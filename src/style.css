@@ -47,16 +47,24 @@ svg{
 .vis{
 	position: relative;
 }
+
 #info{
 	position: absolute;
 	right: 0px;
-	top: 130px;
+	top: 172px;
+	padding: 20px;
+	display: block;
+}
+h2#currentYear{
+	position: absolute;
+	right: 100px;
+	top: 160px;
 	padding: 20px;
 	display: block;
 }
 a.butt{
 	background: #fff;
-	padding: 20px;
+	padding: 15px;
 	-webkit-border-radius: 10px; 
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -67,7 +75,7 @@ a.butt{
 	font-size: 11px;
 }
 a.butt:hover,a.butt:active{
-	background: orange;
+	background: yellow;
 }
 
 
