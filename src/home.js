@@ -3,25 +3,11 @@
  *  API https://github.com/mbostock/d3/wiki/API-Reference
  *  http://chimera.labs.oreilly.com/books/1230000000345/index.html
  */ 
-///////////  DOM  /////////// 
-var w = 700;
-var h = 300;
-var svg = d3.select("svg");
 
-	    var padding = 150;
-	    var yScale = d3.scale.linear().domain([0,230]).range([230, 0]);
-	    var yAxis = d3.svg.axis()
-                  .scale(yScale)
-                  .orient("left")
-                  .ticks(6);
 
-        svg.append("g")
-		    .attr("class", "axis")
-		    .attr("transform", "translate(" + padding + ",40)")
-		    .call(yAxis);
 
-///////////  DATA  ///////////
-var testingArray = [1,6,4,6, 3,8,13,14, 15,13,11,6];
+
+///////////  DATA  /////////// 
 var xData = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
 var selectedYear = 2010; // by default, we display data in 2010.
@@ -32,8 +18,12 @@ for(var i = 0; i <= 4; i++ ){
 		dataMean[i] = [0,0,0,0, 0,0,0,0, 0,0,0,0];
 		days[i] = [0,0,0,0, 0,0,0,0, 0,0,0,0];
 	}
+ 
 
-
+///////////  DOM  /////////// 
+var w = 700;
+var h = 300;
+var svg = d3.select("svg");
 
 ///////////  Functions  ///////////
 
@@ -125,43 +115,24 @@ var displayData = function(selectedYear){
 				   	}) 
 	    			.text(function(d) { return d;})
 	    			.attr("font-size",8);
+
+
+	    var padding = 150;
+	    var yScale = d3.scale.linear()
+	    	.domain([0,230])    
+	    	.range([230, 0]);   
+	    	
+	    var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(6);
+
+        svg.append("g")
+		    .attr("class", "axis")
+		    .attr("transform", "translate(" + padding + ",40)")
+		    .call(yAxis);
  
-	    // var scale = d3.scale.linear()
-     //                .domain([-10, 230])
-     //                .range([-10, 100]);
-
-
-	   // var xText = svg.selectAll("text")
-	   //  			.data(xData)
-	   //  			.enter()
-	   //  			.append("text")
-	   //  			.attr("x", function(d, i) { return i * 31 + 160;})
-	   //  			.attr("y", 320) 
-	   //  			.text(function(d){return d;})
-	   //  			.attr("fill", "#333")
-	   //  			.attr("font-size",8);
-
-// var circles = svg.selectAll("circle")
-//     			.data(testingArray)
-// 			    .enter()  //returns a placeholder reference to the new element
-// 			    .append("circle"); //.append() finally adds a circle to the DOM
-
-// circles.attr("cx", function(d, i) {
-//             return (i * 50) + 45;
-//         })
-//        .attr("cy", h/2)
-//        .attr("r", function(d) {
-//             return d;
-//        })
-//        .attr("fill", "#72EDF2");
-
-	// d3.select(".vis").selectAll("p")
-	//     .data(dataMean[selectedYear-2010])
-	//     .enter()
-	//     .append("p")
-	//     .text(function(d){return "The data here is "+d;});
-
- //    console.log(d3.selectAll("p"))
+  
 };
  
 var changeYear = function(year){
@@ -204,6 +175,22 @@ var changeYear = function(year){
 	    			.text(function(d) { return d;})
 	    			.attr("font-size",8);
 
+
+	    var padding = 150;
+	    var yScale = d3.scale.linear()
+	    	.domain([0,230])    
+	    	.range([230, 0]);   
+	    	
+	    var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(6);
+
+        svg.append("g")
+		    .attr("class", "axis")
+		    .attr("transform", "translate(" + padding + ",40)")
+		    .call(yAxis);
+  
 };
 
 ///////////  Functions  ///////////
