@@ -3,13 +3,26 @@
  *  API https://github.com/mbostock/d3/wiki/API-Reference
  *  http://chimera.labs.oreilly.com/books/1230000000345/index.html
  */ 
-
 ///////////  DOM  /////////// 
+var w = 700;
+var h = 300;
+var svg = d3.select("svg");
 
-d3.select("section").append("svg"); 
- 
+	    var padding = 150;
+	    var yScale = d3.scale.linear().domain([0,230]).range([230, 0]);
+	    var yAxis = d3.svg.axis()
+                  .scale(yScale)
+                  .orient("left")
+                  .ticks(6);
+
+        svg.append("g")
+		    .attr("class", "axis")
+		    .attr("transform", "translate(" + padding + ",40)")
+		    .call(yAxis);
 
 ///////////  DATA  ///////////
+var testingArray = [1,6,4,6, 3,8,13,14, 15,13,11,6];
+var xData = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
 
 var selectedYear = 2010; // by default, we display data in 2010.
 
@@ -20,6 +33,10 @@ for(var i = 0; i <= 4; i++ ){
 		days[i] = [0,0,0,0, 0,0,0,0, 0,0,0,0];
 	}
 
+
+
+///////////  Functions  ///////////
+
 var converting = function(str){
 	if(str[0]==='-'){
 		return (parseInt(str.substring(1))*(-1));
@@ -28,7 +45,7 @@ var converting = function(str){
 	}
 };
 
-var fixing = function(loadedData){
+var fixing = function(loadedData){  //caculating dataMean 
    
 	for(var i = 0; i<loadedData.length;i++){
 		console.log(loadedData[i]);
@@ -66,16 +83,131 @@ var fixing = function(loadedData){
 	/// dataMean[year][month] = temperatureMean
 };
 
-
+ 
 var displayData = function(selectedYear){
-	d3.select(".vis").selectAll("p")
-	    .data(dataMean[selectedYear-2010])
-	    .enter()
-	    .append("p")
-	    .text(function(d){return "The data here is "+d;});
 
-    console.log(d3.selectAll("p"))
-}
+	console.log("displayData " );
+	console.log(dataMean[selectedYear-2010]);	
+	//var svg = d3.select("section").append("svg");
+ 
+	svg.attr("width", w)
+	   .attr("height", h);
+
+	   svg.selectAll("rect")
+			   .data(dataMean[selectedYear-2010])
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) { return i * 33 + 160;})
+			   .attr("y", function(d) { 
+			   		if(d >= 0){
+			   			return (h - 30 - d * 1);
+			   		}else{
+			   			return (h - 30);
+			   		}
+			   	})
+			   .attr("width", 30)
+			   .attr("height",  function(d) { 
+			   		if(d>=0){return d * 1;}else{return -1*d;}
+			   	})
+			   .attr("fill", "#72EDF2");
+	
+	   svg.selectAll("text")
+	    			.data(dataMean[selectedYear-2010])
+	    			.enter()
+	    			.append("text")
+	    			.attr("x",function(d, i) { return i * 33 + 160;})
+	    			.attr("y", function(d) { 
+				   		if(d >= 0){
+				   			return (h - 30 - d*1 - 3);
+				   		}else{
+				   			return (h - 30 - 3);
+				   		}
+				   	}) 
+	    			.text(function(d) { return d;})
+	    			.attr("font-size",8);
+ 
+	    // var scale = d3.scale.linear()
+     //                .domain([-10, 230])
+     //                .range([-10, 100]);
+
+
+	   // var xText = svg.selectAll("text")
+	   //  			.data(xData)
+	   //  			.enter()
+	   //  			.append("text")
+	   //  			.attr("x", function(d, i) { return i * 31 + 160;})
+	   //  			.attr("y", 320) 
+	   //  			.text(function(d){return d;})
+	   //  			.attr("fill", "#333")
+	   //  			.attr("font-size",8);
+
+// var circles = svg.selectAll("circle")
+//     			.data(testingArray)
+// 			    .enter()  //returns a placeholder reference to the new element
+// 			    .append("circle"); //.append() finally adds a circle to the DOM
+
+// circles.attr("cx", function(d, i) {
+//             return (i * 50) + 45;
+//         })
+//        .attr("cy", h/2)
+//        .attr("r", function(d) {
+//             return d;
+//        })
+//        .attr("fill", "#72EDF2");
+
+	// d3.select(".vis").selectAll("p")
+	//     .data(dataMean[selectedYear-2010])
+	//     .enter()
+	//     .append("p")
+	//     .text(function(d){return "The data here is "+d;});
+
+ //    console.log(d3.selectAll("p"))
+};
+ 
+var changeYear = function(year){
+	console.log(year);
+	selectedYear = Number(year);
+	
+	svg.selectAll("rect")
+			   .data(dataMean[selectedYear-2010])
+			   .transition()
+			   .duration(1000)
+			   .ease("linear")
+			   .attr("x", function(d, i) { return i * 33 + 160;})
+			   .attr("y", function(d) { 
+			   		if(d >= 0){
+			   			return (h - 30 - d * 1);
+			   		}else{
+			   			return (h - 30);
+			   		}
+			   	})
+			   .attr("width", 30)
+			   .attr("height",  function(d) { 
+			   		if(d>=0){return d * 1;}else{return -1*d}
+			   	})
+			   .attr("fill", "#72EDF2");
+	
+		svg.selectAll("text").remove();
+
+	    svg.selectAll("text")
+	    			.data(dataMean[selectedYear-2010])
+	    			.enter()
+	    			.append("text")
+	    			.attr("x",function(d, i) { return i * 33 + 160;})
+	    			.attr("y", function(d) { 
+				   		if(d >= 0){
+				   			return (h - 30 - d*1 - 3);
+				   		}else{
+				   			return (h - 30 - 3);
+				   		}
+				   	}) 
+	    			.text(function(d) { return d;})
+	    			.attr("font-size",8);
+
+};
+
+///////////  Functions  ///////////
+
 
 //load data from csv and.. Start Visulisation 
 d3.csv("meteo.csv", function(d){
@@ -86,20 +218,14 @@ d3.csv("meteo.csv", function(d){
 	fixing(dataset);
 	console.table(dataMean);
 
-	displayData(selectedYear);
-	
-	
-	
+	displayData(2010);
+	  
 });
-
-
-
-
-
-
-
-
-
-
-
   
+
+//d3.select("section").append("svg"); 
+//var svg = d3.select("svg");
+
+
+
+			  
